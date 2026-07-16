@@ -13,9 +13,9 @@ BundleOfJoy::BundleOfJoy() { //bundle requires 5 items... we start off at 0 obvi
     requiredItems[4] = Item("Cafe Gift Card", "Joy", 0, true);
 } //keep in mind jessie you had an extra argument for when you were deciding whether to have an energy restore option... watch 
 
-bool BundleOfJoy::needsItem(string itemName) {
+bool BundleOfJoy::needsItem(string itemName) { // OR ROSE AND SUNFLOWER
     for (int i = 0; i < requiredSize; i++) {
-        if (requiredItems[i].getName() == itemName)
+        if (requiredItems[i].getName() == itemName || (requiredItems[i].getName() == "Rose" && itemName == "Sunflower"))
         {
             return true;
         }
@@ -39,6 +39,22 @@ bool BundleOfJoy::isDonated(string itemName){
 bool BundleOfJoy::donateItem(Item item)
 {
     string itemName = item.getName();
+
+    //sunflower logic time..... let's think about it
+    /* RULES
+    1. ROSE AND SUNFLOWER TAKE UP THE SAME SLOT IN BOJ
+    2. ONLY ONE OF EM CAN BE DONATED, BOTH CANNOT BE USED TO COMPLETE THE BUNDLE
+    3. AT LEAST ONE COMPLETES THE SLOT IN BUNDLE
+    4. THE SUNFLOWER IS !!!!!!!REQUIRED!!!!!!! TO GET THE BEST ENDING
+    So... in donateItem make sure you can't double donate
+    If rose is being donated and sunflower has been donated OR if sunflower is being donated and rose has been donated
+    Say no!*/
+
+    if ((itemName == "Rose" && isDonated("Sunflower")) || (itemName == "Sunflower" && isDonated("Rose"))) {
+        cout << "You've already put a flower in the memory box!" << endl;
+        return false;
+    }
+
 
     if (!needsItem(itemName))
     {
@@ -106,9 +122,14 @@ void BundleOfJoy::displayBundle()
 
     bool allDonated = true;
 
-    for (int i = 0; i < requiredSize; i++)
+    for (int i = 0; i < requiredSize; i++) //amend rose sunflower bug
     {
-        if (!isDonated(requiredItems[i].getName()))
+        string requiredName = requiredItems[i].getName(); //requiredName is name of requiredItems[i]
+/*
+IF the required item has not been donated AND sunflower isn't replacing rose
+donated items are NOT!
+*/
+        if (!isDonated(requiredName) && !(requiredName == "Rose" && isDonated("Sunflower")))
         {
             cout << "- ";
             requiredItems[i].displayItem();

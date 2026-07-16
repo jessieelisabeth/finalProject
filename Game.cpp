@@ -88,6 +88,11 @@ Item Game::makeItemByName(string itemName)
     {
         return Item("Rose", "Romance", 0, true);
     }
+    else if (itemName == "Sunflower")
+    {
+        return Item("Sunflower", "Personal Growth", 0, true); //not a misc anymore.
+    }
+    
     else if (itemName == "Thank You Note")
     {
         return Item("Thank You Note", "Kindness", 0, true);
@@ -249,7 +254,32 @@ void Game::talkToFriend(){
         player.addItem(makeItemByName(reward));
 
     }
-    // For later: if friendship points are 100 for at least two friends... give player sunflower.
+    // For later: if friendship points are 100 for ALL friends... give player sunflower.
+    // ummm also player can NEVER use unHinge ! this isn't supposed to be easy 
+    // also obviously you cant have already won the sunflower 
+    //closing un hinge --> raise self worth ---> find best ending loophole
+    //logic time
+    /* Assume all friend support stats are maxxed out.
+    Then, for all friend count, if the support start is below 100,
+    switch the boolean to false.*/
+    bool friendMaxxing = true;
+    for (int i = 0; i < friendCount; i++)
+    {
+        if (friends[i].getSupportLevel() < 100) {
+            friendMaxxing = false;
+        }
+    }
+    /* and if i've maxed out all my friends and i've never used unhinge(0) 
+    i dont own or havent put a sunflower in the bundle .isdonated then give me a sunflower
+    oh yeah*/
+    if (friendMaxxing && player.getunHingePoints() == 0 && !player.hasItem("Sunflower") && !bundle.isDonated("Sunflower")) {
+        //addItem to my player! 
+        player.addItem(makeItemByName("Sunflower"));
+         cout << endl;
+         cout << "Your friends have surprised you and gather around you." << endl;
+         cout << "(*˘︶˘*).｡.:*♡ They thank you for growing with them. (Ɔ ˘⌣˘)♥(˘⌣˘ C)" << endl;
+         cout << "Your friends have given you a Sunflower!" << endl;
+    }
 }
 
 
@@ -257,6 +287,8 @@ void Game::talkToFriend(){
 void Game::donateToBundle() {
     int choice = 0;
     string itemName = "";
+    //more sunflower logic. if the player ahs sunflower show option for donation.
+    bool hasSunflower = player.hasItem("Sunflower");
 
     cout << endl;
     cout << "What would you like to donate?" << endl;
@@ -265,7 +297,16 @@ void Game::donateToBundle() {
     cout << "3. Rose" << endl; //DONT FORGET SUNFLOWER GOD PLEASE
     cout << "4. Thank You Note" << endl;
     cout << "5. Cafe Gift Card" << endl;
-    cout << "6. Cancel" << endl;
+
+    if (hasSunflower)
+    {
+        cout << "6. Sunflower" << endl;
+        cout << "7. Cancel" << endl;
+    }
+    else {
+        cout << "6. Cancel" << endl;
+    }
+
     cout << "Choice: ";
     cin >> choice;
 
@@ -284,8 +325,17 @@ void Game::donateToBundle() {
     else if (choice == 5) {
         itemName = "Cafe Gift Card";
     }
+    else if (choice == 6 && hasSunflower)
+    { 
+        itemName="Sunflower"; 
+    }
+    else if ((choice == 6 && !hasSunflower) || (choice == 7 && hasSunflower)){
+        cout << "Why are you backtracking?" << endl;
+        return;
+    }
+    
     else {
-        cout << "Why are you backtracking?" << endl; 
+        cout << "What are you waffling on about?" << endl; 
         return;
     }
 
@@ -298,6 +348,10 @@ void Game::donateToBundle() {
 
     if (donated){
         player.removeItem(itemName);
+    }
+    if (donated && itemName == "Sunflower" && player.getSelfWorth()== 100) {
+        displayEnding();
+        running = false;
     }
 }
 
@@ -447,16 +501,16 @@ highestRomanceIndex = i;
     }
 }
 
-    if (!bundle.isComplete()) //if the bundle is NOT completed, bad ending
-    {
-        cout << "BOO! The Bundle of Joy was not completed." << endl;
-        cout << "Seriously? This is probably the easiest aspect of the game." << endl;
-    }
-    else if (player.getSelfWorth() == 100) { 
-    
-        cout << "Congratulations on getting the secret best ending!" << endl;
-        //some tinkering to do here. maybe a new class? type sh
-    }
+if (player.getSelfWorth() == 100 &&
+    bundle.isDonated("Sunflower"))
+{
+    cout << "Congratulations on getting the secret best ending!" << endl;
+}
+else if (!bundle.isComplete())
+{
+    cout << "BOO! The Bundle of Joy was not completed." << endl;
+    cout << "Seriously? This is probably the easiest aspect of the game." << endl;
+}
 
     else if (highestRomance >= 60)
     {
