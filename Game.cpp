@@ -312,7 +312,7 @@ void Game::talkToFriend(){
     /* and if i've maxed out all my friends and i've never used unhinge(0) 
     i dont own or havent put a sunflower in the bundle .isdonated then give me a sunflower
     oh yeah*/
-    if (friendMaxxing && player.getunHingePoints() == 0 && !player.hasItem("Sunflower") && !bundle.isDonated("Sunflower")) {
+    if (friendMaxxing && player.getunHingePoints() == 0 &&    player.getLoveInterestPoints() == 0 && !player.hasItem("Sunflower") && !bundle.isDonated("Sunflower")) {
         //addItem to my player! 
         player.addItem(makeItemByName("Sunflower"));
          cout << endl;
@@ -454,7 +454,7 @@ void Game::donateToBundle() {
     if (donated){
         player.removeItem(itemName);
     }
-    if (donated && itemName == "Sunflower" && player.getSelfWorth()== 100) {
+    if (donated && itemName == "Sunflower" && player.getSelfWorth()== 100 && player.getLoveInterestPoints() == 0 ) {
         displayEnding();
         running = false;
     }
@@ -606,7 +606,7 @@ highestRomanceIndex = i;
     }
 }
 
-if (player.getSelfWorth() == 100 &&
+if (player.getSelfWorth() == 100 && player.getLoveInterestPoints() == 0 &&
     bundle.isDonated("Sunflower"))
 {
     cout << "Congratulations on getting the secret best ending!" << endl;

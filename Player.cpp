@@ -220,10 +220,9 @@ void Player::showStats()
     cout << "Name: " << name << endl;
     cout << "Day: " << currentDay << " / 7" << endl;
     cout << "Energy: " << energy << " / 10" << endl;
-    cout << "Self-worth: " << selfWorth << " / 100" << endl; // do i really want to display these or do i want to keep the frustration in the game?
+// REMOVED SELF WORTH AND UNHINGED POINT STATS, NOT SORRY ABOUT IT
     cout << "Love Interest Points: " << loveInterestPoints << endl;
     cout << "Friendship Points: " << friendshipPoints << endl;
-    cout << "unHinge Points: " << unHingePoints << endl;
     cout << "Current Location: " << currentLocation << endl;
     cout << "Inventory Items: " << inventorySize << " / 20" << endl;
     cout << "==================================" << endl;
