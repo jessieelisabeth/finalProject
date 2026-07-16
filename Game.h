@@ -34,6 +34,7 @@ private:
     void perfectDate(); //my secret minigame!!!
     void displayCredits();
     void travel();
+    void displayBundlePlanner(); //Extra Credit. inshallah it works
 
 public:
     Game();

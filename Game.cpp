@@ -1,12 +1,13 @@
 #include "Game.h"
 #include <iostream>
 #include <fstream>
+ //no time for random
 using namespace std;
 
 Game::Game() : player("Player")
 {
+ 
     running = true;
-
     loveInterestCount = 5;
     friendCount = 4;
 //Did these idiots justice.
@@ -454,10 +455,87 @@ void Game::donateToBundle() {
     if (donated){
         player.removeItem(itemName);
     }
-    if (donated && itemName == "Sunflower" && player.getSelfWorth()== 100 && player.getLoveInterestPoints() == 0 ) {
+    if (donated && itemName == "Sunflower" && player.getSelfWorth()== 100 && player.getLoveInterestPoints() == 0 && player.getunHingePoints() == 0) {
         displayEnding();
         running = false;
     }
+}
+
+void Game::displayBundlePlanner() { //Added Extra credit
+    bool playerMissingItems = false; //assume the player is missing no items
+    cout << endl;
+    cout << "------ Bundle Planner -------" << endl;
+    cout << "Running a bundle analysis..." << endl;
+    cout << "---------------------------- " << endl;
+    cout << endl;
+    cout << "Based on your gameplay, we recommend the following: "<< endl;
+    if (!bundle.isDonated("Friendship Bracelet")) {
+        playerMissingItems = true;
+        cout << "Friendship Bracelet:" << endl;
+
+        if (player.hasItem("Friendship Bracelet")) {
+            cout << "Donate this item!" << endl;
+        }
+        else {
+            cout << "Go see at Reagan at " << friends[0].getLocation() << endl;
+        }
+    }
+    if (!bundle.isDonated("Letter of Acceptance")) {
+        playerMissingItems = true;
+        cout << "Letter of Acceptance:" << endl;
+
+         if (player.hasItem("Letter of Acceptance")) {
+            cout << "Donate this item!" << endl;
+        }
+        else {
+            cout << "Go see Emma at " << friends[1].getLocation() << endl;
+        }
+    }
+    if (!bundle.isDonated("Thank You Note")) {
+        playerMissingItems = true;
+        cout << "Thank You Note:" << endl;
+         if (player.hasItem("Thank You Note")) {
+            cout << "Donate this item!" << endl;
+        }
+        else {
+            cout << "Go see Brayden at " << friends[2].getLocation() << endl;
+        }
+    }
+    if (!bundle.isDonated("Cafe Gift Card")) {
+        playerMissingItems = true;
+        cout << "Cafe Gift Card:" << endl;
+         if (player.hasItem("Cafe Gift Card")) {
+            cout << "Donate this item!" << endl;
+        }
+        else {
+            cout << "Go see Maren at " << friends[3].getLocation() << endl;
+        }
+    }
+    // account for sunflower and rose, true when rose or sunflower are donated
+    bool flowerDonated = bundle.isDonated("Rose") || bundle.isDonated("Sunflower");
+    if (!flowerDonated) {
+        playerMissingItems = true;
+        cout << "Flower:" << endl;
+        if (player.hasItem("Sunflower")) {
+            cout << "Donate this Sunflower!" << endl;
+        }
+        else if (player.hasItem("Rose"))
+        {
+            cout << "Donate this Rose!" << endl;
+        }
+        else
+        {
+            cout << "Talk to your love interests to earn a rose." << endl;
+            cout << "Or prioritize something different! " << endl;
+            cout << "Something else may bloom!" << endl;
+        }
+        cout << endl;
+    }
+    if (!playerMissingItems) {
+        cout << "You've already completed the bundle! If you're unhappy with your ending, maybe try something different?" << endl;
+    }
+    //if the boolean is flase after all the checks, the bundle is complete
+
 }
 
 void Game::useUnHinge() {
@@ -607,7 +685,8 @@ highestRomanceIndex = i;
 }
 
 if (player.getSelfWorth() == 100 && player.getLoveInterestPoints() == 0 &&
-    bundle.isDonated("Sunflower"))
+    bundle.isDonated("Sunflower")
+    && player.getunHingePoints() == 0) // Closed unHinge best ending loophole
 {
     cout << "Congratulations on getting the secret best ending!" << endl;
     perfectDate();
@@ -662,7 +741,7 @@ else if (!bundle.isComplete())
             cout << endl;
             cout << "Penguin accused you of being a gold digger after you saw him leave a ten percent tip on a bill at a sushi restaurant." << endl;
         }
-        else if (highestRomanceIndex == 4) { //tidy up if you have a chance before the interviw, you're getting sloppy
+        else if (highestRomanceIndex == 4) { // Tidied up endings
             cout << "--- HE'S AT A FARM SOMEWHERE ----" << endl;
             cout << endl;
             cout << "You ended up with... I don't even know man." << endl;
@@ -687,7 +766,7 @@ else if (!bundle.isComplete())
 //added endings
     cout << "============================" << endl;
 }
-    void Game::displayGameTips() { //stuff for file input requirements that i dont quite yet get
+    void Game::displayGameTips() { //Added bundle planner as this seemed most appropriate rather than giving a new menu options
 
 
 
@@ -700,6 +779,7 @@ else if (!bundle.isComplete())
     }
     
     tipsFile.close();
+    displayBundlePlanner();
 
     }
     void Game::perfectDate() {
