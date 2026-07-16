@@ -10,7 +10,7 @@ Player::Player()
     selfWorth = 100;
     loveInterestPoints = 0;
     friendshipPoints = 0;
-    jojaInfluence = 0; //check
+    unHingePoints = 0; //new name for Joja Influence
     currentLocation = "Bedroom";
     inventorySize = 0;
 }
@@ -23,7 +23,7 @@ Player::Player(string newName)
     selfWorth = 100;
     loveInterestPoints = 0;
     friendshipPoints = 0;
-    jojaInfluence = 0;
+    unHingePoints = 0;
     currentLocation = "Bedroom";
     inventorySize = 0;
 }
@@ -58,9 +58,9 @@ int Player::getFriendshipPoints()
     return friendshipPoints;
 }
 
-int Player::getJojaInfluence()
+int Player::getunHingePoints()
 {
-    return jojaInfluence;
+    return unHingePoints;
 }
 
 string Player::getCurrentLocation()
@@ -138,9 +138,9 @@ void Player::addFriendshipPoints(int amount)
     }
 }
 
-void Player::addJojaInfluence(int amount) //just naming this jojaInfluence for now because i have no idea what to name it and i kind of want to give it more of a sparkly backstory.
+void Player::addunHingePoints(int amount) //REVISED
 {
-    jojaInfluence = jojaInfluence + amount;
+    unHingePoints = unHingePoints + amount;
 }
 
 void Player::nextDay()
@@ -223,7 +223,7 @@ void Player::showStats()
     cout << "Self-worth: " << selfWorth << " / 100" << endl; // do i really want to display these or do i want to keep the frustration in the game?
     cout << "Love Interest Points: " << loveInterestPoints << endl;
     cout << "Friendship Points: " << friendshipPoints << endl;
-    cout << "Joja Influence: " << jojaInfluence << endl;
+    cout << "unHinge Points: " << unHingePoints << endl;
     cout << "Current Location: " << currentLocation << endl;
     cout << "Inventory Items: " << inventorySize << " / 20" << endl;
     cout << "==================================" << endl;

@@ -145,7 +145,10 @@ void Game::run()
         }
         else if (choice == 9)
         {
-            running =false;
+            useUnHinge();
+        }
+        else if (choice == 10) {
+            running = false;
             cout << "See you later!" << endl;
         }
         else {
@@ -160,7 +163,7 @@ void Game::showMenu()
     cout << "name this thing" << endl;
     cout << "Day: " << player.getCurrentDay() << " / 7" << endl;
     cout << "Energy: " << player.getEnergy() << " / 10" << endl;
-    cout << "Self-worth: " << player.getSelfWorth() << " / 100" << endl;
+    cout << "Self-worth: " << player.getSelfWorth() << " / 100" << endl; //thinking about gatekeeping this
     cout << "Location: " << player.getCurrentLocation() << endl;
     cout << "Bundle Progress: " << bundle.getProgress() << " / " << bundle.getRequiredCount() << endl;
     cout << "===================================" << endl;
@@ -174,7 +177,8 @@ void Game::showMenu()
     cout << "7. End day" << endl;
     cout << "8. Learn secrets" << endl; //this learn secrets... is there a way i can only make this option appear after a certain day? like after day 5
     //if day > 4 then showNewMenu? something to think about.
-    cout << "9. Quit" << endl;
+    cout << "9. Open unHinge" << endl;
+    cout << "10. Quit" << endl;
     cout << "Choose an option: ";
 }
 
@@ -297,6 +301,124 @@ void Game::donateToBundle() {
     }
 }
 
+void Game::useUnHinge() {
+    cout << endl;
+    cout << "Welcome to unHinge!" << endl;
+    cout << "Get what you need, no interaction needed!" << endl;
+    cout << endl;
+    int choice;
+    // setting unhinge use cost at 20
+    cout << "1. Get Friendship Bracelet" << endl;
+    cout << "2. Get Letter of Acceptance" <<endl;
+    cout << "3. Get Rose" << endl;
+    cout << "4. Get Thank You Note" << endl;
+    cout << "5. Get Cafe Gift Card" << endl;
+    cout << "6. Unhinge from unHinge" << endl;
+    cout << "Choice: ";
+    cin >> choice;
+
+    // logic time for unHinge. 
+    if (choice == 1) {
+        if (bundle.isDonated("Friendship Bracelet") || player.hasItem("Friendship Bracelet")) {
+            cout << "You already have the Friendship Bracelet!" << endl;
+        }
+        else if (player.getSelfWorth() < 20) { //ensures the player has enough self worth to spend on unhinge 
+        cout << "Not to make things weird... but maybe focus on yourself." << endl;
+    }
+        else {
+            Item bracelet("Friendship Bracelet", "Friendship", 0, true);
+            player.addItem(bracelet);
+            player.loseSelfWorth(20);
+            player.addunHingePoints(1);
+
+            cout << "A stranger has given you a Friendship Bracelet!" << endl;
+
+        }
+    }
+        else if (choice == 2) {
+          if (bundle.isDonated("Letter of Acceptance") || player.hasItem("Letter of Acceptance")) {
+            cout << "You already have the Letter of Acceptance!" << endl;
+        }
+        else if (player.getSelfWorth() < 20) { //ensures the player has enough self worth to spend on unhinge 
+        cout << "Not to make things weird... but maybe focus on yourself." << endl;
+    }
+        else {
+            Item bracelet("Letter of Acceptance", "Achievement", 0, true);
+            player.addItem(bracelet);
+            player.loseSelfWorth(20);
+            player.addunHingePoints(1);
+
+            cout << "A stranger has given you a Letter of Acceptance" << endl;
+
+        }
+}
+    else if (choice == 3) {
+        if (bundle.isDonated("Rose") || player.hasItem("Rose")) {
+            cout << "You already have the Rose!" << endl;
+        }
+        else if (player.getSelfWorth() < 20) {
+            cout <<"Not to make things weird... but maybe focus on yourself." << endl;
+        }
+        else {
+            Item rose("Rose", "Romance", 0, true);
+
+            player.addItem(rose);
+            player.loseSelfWorth(20);
+            player.addunHingePoints(1);
+
+            cout << "A stranger has given you a Rose!" << endl;
+        }
+    }
+    else if (choice == 4) {
+        if (bundle.isDonated("Thank You Note") || player.hasItem("Thank You Note")) {
+            cout << "You already have the Thank You Note!" << endl;
+        }
+        else if (player.getSelfWorth() < 20)
+    {
+        cout << "Not to make things weird... but maybe focus on yourself." << endl;
+    }
+    else
+    {
+        Item note("Thank You Note", "Kindness", 0, true);
+
+        player.addItem(note);
+        player.loseSelfWorth(20);
+        player.addunHingePoints(1);
+
+        cout << "A stranger has given you a Thank You Note!" << endl;
+    }
+}
+else if (choice == 5) {
+    if (bundle.isDonated("Cafe Gift Card") ||
+        player.hasItem("Cafe Gift Card"))
+    {
+        cout << "You already have the Cafe Gift Card!" << endl;
+    }
+    else if (player.getSelfWorth() < 20)
+    {
+        cout << "Not to make things weird... but maybe focus on yourself." << endl;
+    }
+    else
+    {
+        Item giftCard("Cafe Gift Card", "Joy", 0, true);
+
+        player.addItem(giftCard);
+        player.loseSelfWorth(20);
+        player.addunHingePoints(1);
+
+        cout << "A stranger has given you a Cafe Gift Card!" << endl;
+    }
+}
+else if (choice == 6) {
+    cout << "You unHinged from unHinge." << endl;
+}
+else
+{
+    cout << "This is not an option!" << endl;
+}
+    }
+
+
 void Game::endDay() {
     cout << endl;
     cout << "The day ends." << endl;
@@ -313,19 +435,51 @@ void Game::displayEnding() {
     cout << endl;
     cout << "Endings" << endl; //refine this later....
 
+// the following is to implement the highest romance stat and chooses which ending you get if you go the romance route
+int highestRomance = loveInterests[0].getRomanceLevel(); //assuming Otter has the highest romance
+int highestRomanceIndex = 0;
+
+//loop to move from otter to the other interests
+for (int i = 1; i < 5; i++) {
+    if(loveInterests[i].getRomanceLevel() > highestRomance) { //after otter... check 1 thru 4, find who has the most romance and make that the highest romance index.
+highestRomance = loveInterests[i].getRomanceLevel();
+highestRomanceIndex = i;
+    }
+}
+
     if (!bundle.isComplete()) //if the bundle is NOT completed, bad ending
     {
         cout << "BOO! The Bundle of Joy was not completed." << endl;
-        cout << "Place something about distractions here." << endl;
+        cout << "Seriously? This is probably the easiest aspect of the game." << endl;
     }
-    else if (player.getSelfWorth() >= 60 && player.getJojaInfluence() <= 2) { //good ending ish
+    else if (player.getSelfWorth() == 100) { 
     
-        cout << "Congratulations on completing the Bundle of Joy!" << endl;
+        cout << "Congratulations on getting the secret best ending!" << endl;
+        //some tinkering to do here. maybe a new class? type sh
     }
-    else
+
+    else if (highestRomance >= 60)
     {
-        cout << "You've completed the Bundle of Joy, but at what cost?" << endl; //meh ending
+        if (highestRomanceIndex == 0) {
+            cout <<"otter's ending"<<  endl; //i believe in case of a tie otter beats all.
+        }
+        else if (highestRomanceIndex == 1 ) {
+            cout << "panda's ending" << endl;
+        }
+        else if (highestRomanceIndex == 2 ) {
+            cout << " seal's ending" << endl;
+        }
+        else if (highestRomanceIndex == 3) {
+            cout << "peguin's ending" << endl;
+        }
+        else if (highestRomanceIndex == 4) { //tidy up if you have a chance before the interviw, you're getting sloppy
+            cout << "retriever's ending" << endl;
+        }
     }
+    else {
+        cout << "unHinge ending, bundle of joy completed" << endl;
+    }
+
 //ADD MORE ENDINGS BEFORE INTERVIEW THIS SUCKS!!!! be evil
     cout << "============================" << endl;
 }

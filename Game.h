@@ -30,6 +30,7 @@ private:
     void endDay();
     void displayEnding();
     void displayGameTips();
+    void useUnHinge();
 
 public:
     Game();

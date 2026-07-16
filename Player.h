@@ -14,7 +14,7 @@ private:
     int selfWorth;
     int loveInterestPoints;
     int friendshipPoints;
-    int jojaInfluence;
+    int unHingePoints;
     string currentLocation;
 
     Item inventory[20];
@@ -30,7 +30,7 @@ public:
     int getSelfWorth();
     int getLoveInterestPoints();
     int getFriendshipPoints();
-    int getJojaInfluence();
+    int getunHingePoints();
     string getCurrentLocation();
 
     void setName(string newName);
@@ -44,7 +44,7 @@ public:
 
     void addLoveInterestPoints(int amount);
     void addFriendshipPoints(int amount);
-    void addJojaInfluence(int amount);
+    void addunHingePoints(int amount);
 
     void nextDay();
 
