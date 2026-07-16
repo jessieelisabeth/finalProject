@@ -45,28 +45,28 @@ Game::Game() : player("Player")
         "whata comes next"
     );
 
-    friends[0] = Friend("Reagan", "Stand up!", "Cafe", 40, "Reality Check", "Friendship Bracelet");
+    friends[0] = Friend("Reagan", "Stand up!", "Cafe", 80, "Reality Check", "Friendship Bracelet");
     friends[0].setFriendDialogues(
         "Stand up!",
         "I'm glad to see you around more.",
         "I made you a friendship bracelet."
     );
 
-    friends[1] = Friend("Emma", "Did you go to class today?", "Classroom", 40, "Academic Support", "Letter of Acceptance");
+    friends[1] = Friend("Emma", "Did you go to class today?", "Classroom", 80, "Academic Support", "Letter of Acceptance");
     friends[1].setFriendDialogues(
         "Did you go to class today?",
         "Isn't it great to have a stable routine?",
         "Here's a letter for you!"
     );
 
-    friends[2] = Friend("Brayden", "Come dance and stop spiraling.", "Party", 40, "Social Support", "Thank You Note");
+    friends[2] = Friend("Brayden", "Come dance and stop spiraling.", "Party", 80, "Social Support", "Thank You Note");
     friends[2].setFriendDialogues(
         "Come dance! Who cares!",
         "Did you remember how much you've always loved dancing?",
         "Here's a Thank You Note."
     );
 
-    friends[3] = Friend("Maren", "don't know yet?", "Cafe", 40, "Comfort", "Cafe Gift Card");
+    friends[3] = Friend("Maren", "don't know yet?", "Cafe", 80, "Comfort", "Cafe Gift Card");
     friends[3].setFriendDialogues(
         "How's your drink?",
         "not sure yet",
@@ -505,6 +505,7 @@ if (player.getSelfWorth() == 100 &&
     bundle.isDonated("Sunflower"))
 {
     cout << "Congratulations on getting the secret best ending!" << endl;
+    perfectDate();
 }
 else if (!bundle.isComplete())
 {
@@ -539,6 +540,8 @@ else if (!bundle.isComplete())
 }
     void Game::displayGameTips() { //stuff for file input requirements that i dont quite yet get
 
+
+
     ifstream tipsFile("game_tips.txt");
     string line;
 
@@ -549,4 +552,97 @@ else if (!bundle.isComplete())
     
     tipsFile.close();
 
+    }
+    void Game::perfectDate() {
+        string playerName;
+        cin.ignore();
+
+        cout << endl;
+        cout << "☆*:.｡.o You've made it far! o.｡.:*☆" << endl;
+        cout << endl;
+        cout << "Some time later, you're sitting at the cafe..." << endl;
+        cout << "And someone sits in the usually empty chair in front of you." << endl;
+        cout << "(Press Enter to continue)";
+        cin.get();
+
+        cout << endl;
+        cout << "After a heated debate on the superiority of flat whites over lattes," << endl;
+        cout << "The stranger asks you a question." << endl;
+        cout << endl;
+        cout << "\"What's your name?\"" << endl;
+        cout << "Enter your name:";
+        getline(cin, playerName);
+        if (playerName == "") {
+            playerName = "Mysterious Young Lad";
+        }
+
+        cout << endl;
+        cout << "\"" << playerName << "!\"" << endl;
+        cout << "It's a pleasure to finally meet you." << endl;
+
+        int dateChoice;
+
+        cout << endl;
+        cout<< "\"Wanna get out of here?\"" << endl;
+        cout << "1. Go stargazing" << endl;
+        cout << "2. Visit the Boulder Bookstore" << endl;
+        cout << "3. Spontaneously drive up to the mountains" << endl;
+        cout << "Choice: ";
+        cin >> dateChoice;
+        cin.ignore();
+        cout << endl;
+
+        if (dateChoice == 1) {
+            cout << "You and the stranger find yourselves staring at the sky, in comfortable silence." << endl;
+        }
+        else if (dateChoice == 2) {
+            cout << "You and the stranger wander around the bookstore until you find a title that intrigues you," << endl;
+            cout << "The Stranger by Albert Camus" << endl;
+            cout << "You make Jung proud and decide to not ignore the synchronicity. You go home with a copy of The Stranger." << endl;
+            cout << endl;
+            cout << "You decide to go stargazing." << endl;
+            cout << "You and the stranger find yourselves staring at the sky, in comfortable silence." << endl;
+        }
+        else if (dateChoice == 3) {
+            cout << "You take the stranger up to Breckenridge. You've booked a cabin last minute." << endl;
+            cout << "Despite the novelty of each other, there is no anxious energy in the car." << endl;
+            cout << "You decide to go stargazing." << endl;
+            cout << "You and the stranger find yourselves staring at the sky, in comfortable silence." << endl;
+        }
+        else {
+            cout << "You've asked the stranger to surprise you." << endl;
+            cout << "He smiles like he already knew where you were going." << endl;
+            cout << "You decide to go stargazing." << endl;
+            cout << "You and the stranger find yourselves staring at the sky, in comfortable silence." << endl;
+        }
+
+        cout << endl;
+        cout << "(Press Enter to continue)";
+        cin.get();
+
+        cout << endl;
+cout << "        .                  *              ." << endl;
+cout << "                 ✦                           *" << endl;
+cout << "   *                           .                 " << endl;
+cout << "             .          *              ✦        " << endl;
+cout << "                                                " << endl;
+cout << "      ✦               .               *         " << endl;
+cout << "                           .                    " << endl;
+cout << "  .          *                         ✦         " << endl;
+cout << "                    *                           " << endl;
+cout << "         .                       .          *    " << endl;
+cout << "                                                " << endl;
+cout << "                         /\\                     " << endl;
+cout << "            /\\          /  \\        /\\          " << endl;
+cout << "       /\\  /  \\    /\\  /    \\      /  \\        " << endl;
+cout << "      /  \\/    \\  /  \\/      \\ /\\ /    \\       " << endl;
+cout << "_____/__________\\/_____________V__________\\_____" << endl;
+cout << endl;
+        cout << "The stranger turns his head and sees you focused on the stars." << endl;
+        cout << "\"What are you thinking about?\"" << endl;
+        cout << endl;
+        cout << "\"I'm hoping I won't have to turn you into a character in my game.\"" << endl;
+        cout << endl;
+        cout << "\"Game? What game?\"" << endl;
+        // BAM END CREDITS IM THE GOAT
     }

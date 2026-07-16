@@ -31,6 +31,7 @@ private:
     void displayEnding();
     void displayGameTips();
     void useUnHinge();
+    void perfectDate(); //my secret minigame!!!
 
 public:
     Game();
