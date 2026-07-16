@@ -33,6 +33,7 @@ private:
     void useUnHinge();
     void perfectDate(); //my secret minigame!!!
     void displayCredits();
+    void travel();
 
 public:
     Game();

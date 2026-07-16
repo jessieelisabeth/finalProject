@@ -45,28 +45,28 @@ Game::Game() : player("Player")
         "whata comes next"
     );
 
-    friends[0] = Friend("Reagan", "Stand up!", "Cafe", 80, "Reality Check", "Friendship Bracelet");
+    friends[0] = Friend("Reagan", "Stand up!", "Cafe", 40, "Reality Check", "Friendship Bracelet");
     friends[0].setFriendDialogues(
         "Stand up!",
         "I'm glad to see you around more.",
         "I made you a friendship bracelet."
     );
 
-    friends[1] = Friend("Emma", "Did you go to class today?", "Classroom", 80, "Academic Support", "Letter of Acceptance");
+    friends[1] = Friend("Emma", "Did you go to class today?", "Classroom", 40, "Academic Support", "Letter of Acceptance");
     friends[1].setFriendDialogues(
         "Did you go to class today?",
         "Isn't it great to have a stable routine?",
         "Here's a letter for you!"
     );
 
-    friends[2] = Friend("Brayden", "Come dance and stop spiraling.", "Party", 80, "Social Support", "Thank You Note");
+    friends[2] = Friend("Brayden", "Come dance and stop spiraling.", "Party", 40, "Social Support", "Thank You Note");
     friends[2].setFriendDialogues(
         "Come dance! Who cares!",
         "Did you remember how much you've always loved dancing?",
         "Here's a Thank You Note."
     );
 
-    friends[3] = Friend("Maren", "don't know yet?", "Cafe", 80, "Comfort", "Cafe Gift Card");
+    friends[3] = Friend("Maren", "don't know yet?", "Cafe", 40, "Comfort", "Cafe Gift Card");
     friends[3].setFriendDialogues(
         "How's your drink?",
         "not sure yet",
@@ -108,8 +108,18 @@ Item Game::makeItemByName(string itemName)
 void Game::run()
 {
     int choice = 0;
-
-    cout << "this game hasn't been named yet lol." << endl; // PLEASE NAME
+    cout << endl;
+    cout << "--------------------------------" << endl;
+    cout << "           PROSPECTS            " << endl;
+    cout << "--------------------------------" << endl;
+    cout << endl;
+    cout << "Seven days, five prospects." << endl;
+    cout << "Complete the Bundle of Joy and find love before the week ends!" << endl;
+    cout << "Remember, nothing in this world is free..." << endl;
+    cout << endl;
+    cout << "(Press Enter to begin)" << endl;
+    cin.get();
+    cout << endl;
 
     while (running)
     {
@@ -146,13 +156,21 @@ void Game::run()
         }
         else if (choice == 8)
         {
+            if (player.getCurrentDay() >= 5) {
             displayGameTips();
+            }
+            else {
+                cout << "You haven't suffered enough yet to unlock this." << endl;
+            }
         }
         else if (choice == 9)
         {
             useUnHinge();
         }
         else if (choice == 10) {
+            travel();
+        }
+        else if (choice==11) {
             running = false;
             cout << "See you later!" << endl;
         }
@@ -165,13 +183,8 @@ void Game::run()
 void Game::showMenu()
 {
     cout << endl;
-    cout << "name this thing" << endl;
+    cout << "PROSPECTS" << endl;
     cout << "Day: " << player.getCurrentDay() << " / 7" << endl;
-    cout << "Energy: " << player.getEnergy() << " / 10" << endl;
-    cout << "Self-worth: " << player.getSelfWorth() << " / 100" << endl; //thinking about gatekeeping this
-    cout << "Location: " << player.getCurrentLocation() << endl;
-    cout << "Bundle Progress: " << bundle.getProgress() << " / " << bundle.getRequiredCount() << endl;
-    cout << "===================================" << endl;
 
     cout << "1. View player stats" << endl;
     cout << "2. View inventory" << endl;
@@ -180,10 +193,13 @@ void Game::showMenu()
     cout << "5. Talk to a friend" << endl;
     cout << "6. Donate item to Bundle of Joy" << endl;
     cout << "7. End day" << endl;
-    cout << "8. Learn secrets" << endl; //this learn secrets... is there a way i can only make this option appear after a certain day? like after day 5
-    //if day > 4 then showNewMenu? something to think about.
+    if (player.getCurrentDay() >= 5)
+    {
+    cout << "8. Learn secrets" << endl; 
+    }
     cout << "9. Open unHinge" << endl;
-    cout << "10. Quit" << endl;
+    cout << "10. Travel" << endl;
+    cout << "11. Quit" << endl;
     cout << "Choose an option: ";
 }
 
@@ -196,7 +212,7 @@ void Game::talkToLoveInterest()
 
     for (int i = 0; i < loveInterestCount; i++)
     {
-        cout << i + 1 << ". " << loveInterests[i].getName() << endl;
+        cout << i + 1 << ". " << loveInterests[i].getName() << " - " << loveInterests[i].getLocation() << endl;
     }
 
     cout << "Choice: ";
@@ -210,6 +226,17 @@ void Game::talkToLoveInterest()
 
     int index = choice - 1;
 
+    if (loveInterests[index].getLocation() != player.getCurrentLocation()) {
+    cout << loveInterests[index].getName()
+         << " is currently at " << loveInterests[index].getLocation()
+         << ", maybe get there first?" << endl;
+    return;
+}
+  if (player.getEnergy() < 2) {
+        cout << "You don't have enough energy to talk to a prospect!" << endl;
+        cout << "End the day to restore energy!" << endl;
+        return;
+    }
     int damage = loveInterests[index].interact();
 
     player.loseSelfWorth(damage);
@@ -230,7 +257,7 @@ void Game::talkToFriend(){
 
     for (int i = 0; i < friendCount; i++)
     {
-        cout << i + 1 << ". " << friends[i].getName() << endl;
+        cout << i + 1 << ". " << friends[i].getName() << " - " << friends[i].getLocation() << endl;
     }
 
     cout << "Choice: ";
@@ -243,6 +270,19 @@ void Game::talkToFriend(){
     }
 
     int index = choice - 1;
+
+    // Made locations meaningful.
+    if (friends[index].getLocation() != player.getCurrentLocation()) {
+        cout << friends[index].getName() << " is currently at " << friends[index].getLocation() << ", maybe get there first?" << endl;
+        return;
+    }
+
+    // making energy actually mean something here.
+    if (player.getEnergy() < 1) {
+        cout << "You don't have enough energy to talk to your friend!" << endl;
+        cout << "End the day to restore energy!" << endl;
+        return;
+    }
 
     string reward = friends[index].interact();
 
@@ -282,7 +322,72 @@ void Game::talkToFriend(){
     }
 }
 
+void Game::travel()
+{
+    int choice;
+    cout << endl;
+    cout << "               ~Classroom~" << endl;
+    cout << "                    |    " << endl;
+    cout << "   ~Party~ ------ ~Cafe~ ------ ~Gym~" << endl;
+    cout << "                    |     " << endl;
+    cout << "                ~Bedroom~ " << endl;
+    cout << endl;
 
+    cout << "You are currently at: " << player.getCurrentLocation() << endl;
+    cout << endl;
+
+    cout << "Where to?" << endl;
+    cout << "1. Party" << endl;
+    cout << "2. Cafe" << endl;
+    cout << "3. Classroom" << endl;
+    cout << "4. Gym" << endl;
+    cout << "5. Bedroom" << endl;
+    cout << "6. Stay" << endl;
+    cout << "Choice: ";
+    cin >> choice;
+
+    string newLocation = "";
+
+    if (choice == 1) {
+        newLocation = "Party";
+
+    }
+    else if (choice ==2) {
+        newLocation = "Cafe";
+    }
+    else if (choice == 3) {
+        newLocation = "Classroom";
+    }
+    else if (choice == 4) {
+        newLocation = "Gym";
+
+    }
+    else if (choice == 5) {
+        newLocation = "Bedroom";
+    }
+    else if (choice == 6) {
+        cout << "You've stayed at "<< player.getCurrentLocation() << endl;
+        return;
+    }
+    else {
+        cout << "That is not a valid input! But it was a valiant effort!" << endl;
+        return;
+    }
+    // prevent unecessary energy loss when i make travel cost energy.
+    if (newLocation == player.getCurrentLocation()) {
+        cout << "You're already at " << newLocation << endl;
+        return;
+    }
+//this will make travel cost energy of course accounting for if the player doesn't have enough...
+    if (player.getEnergy() < 1) {
+        cout << "You don't have enough energy to travel!" << endl;
+        cout << "End the day for more energy." << endl;
+        return;
+    }
+    player.loseEnergy(1);
+    player.setCurrentLocation(newLocation);
+    cout << "You've moved to " << newLocation << endl;
+}
 
 void Game::donateToBundle() {
     int choice = 0;
