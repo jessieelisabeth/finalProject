@@ -9,16 +9,16 @@ Game::Game() : player("Player")
 
     loveInterestCount = 5;
     friendCount = 4;
-//overall do all these idiots more justice... the game is about the laughs not really about the code (sorry)
+//Did these idiots justice.
     loveInterests[0] = LoveInterest("Otter", "I drink coffee and I code. Unique right?", "Party", "Pride Route", 8); //base dialogue off Pride
     loveInterests[0].setRouteDialogues(
         "You have high standards.",
-        "You should stop pretending to be someone you aren't. I can see through you.",
-        "I guess we could have a future together."
+        "You should stop pretending to be someone you aren't. I can see through you. Can you stop asking me to wear deodorant? It has chemicals.",
+        "I guess we could have a future together. I don't know. I'll let you know in 10 business days."
     );
 
-    loveInterests[1] = LoveInterest("Panda", "I like evertyhing and everyone.", "Party", "Lust Route", 7); // base dialougue off Lust 
-    loveInterests[1].setRouteDialogues( //should i be really assigning character locations ? we will see...........
+    loveInterests[1] = LoveInterest("Panda", "I like everything and everyone.", "Party", "Lust Route", 7); // base dialougue off Lust 
+    loveInterests[1].setRouteDialogues( //Assigning character locations was a good one!
         "You're beautiful.",
         "I wasn't looking at anyone else. I only have eyes for you!",
         "It's natural to look around. I'm only human."
@@ -28,48 +28,48 @@ Game::Game() : player("Player")
     loveInterests[2].setRouteDialogues(
         "I've never met anyone as spontaneous as you are.",
         "I could never have as much free time as you.",
-        "I love how creative you are."
+        "I love how creative you are. Have you considered a harder career?"
     );
 
-    loveInterests[3] = LoveInterest("Penguin", "this one's a bit difficult so idk filler filler .", "Gym", "Greed Route", 6); // base dialogue off Greed
+    loveInterests[3] = LoveInterest("Penguin", "I know what things are worth.", "Gym", "Greed Route", 6); // base dialogue off Greed
     loveInterests[3].setRouteDialogues(
-        " idk yet", //im crine
-        "idk yet",
-        "idk yet"
+        "I really like your ambition. How do you feel about not having kids?", // amended
+        "Have you maxed out your Roth IRA?",
+        "You and I would make a great power couple."
     );
 
-    loveInterests[4] = LoveInterest("Retriever", "lorem ipsum", "Bedroom", "Sloth Route", 8); // base dialogue off Sloth
+    loveInterests[4] = LoveInterest("Retriever", "I'm never asking for too much.", "Bedroom", "Sloth Route", 8); // base dialogue off Sloth
     loveInterests[4].setRouteDialogues(
-        "dolor sit amet", //jessie PLEASE give retriever some good dialogue because you need to do this character justice
-        "i forgot",
-        "whata comes next"
+        "I wouldn't mind seeing you next weekend. Come lay in bed with me.", //This warrants a giggle.
+        "I told my mom about you. Anyway, listen to my most traumatic experience that affected my development...",
+        "I'm off to play golf! See ya!"
     );
 
-    friends[0] = Friend("Reagan", "Stand up!", "Cafe", 40, "Reality Check", "Friendship Bracelet");
+    friends[0] = Friend("Reagan", "I'm probably one of the best human beings alive.", "Cafe", 40, "Reality Check", "Friendship Bracelet");
     friends[0].setFriendDialogues(
         "Stand up!",
-        "I'm glad to see you around more.",
+        "I'm glad to see you around more. Remember, chemistry isn't character. Drink your coffee.",
         "I made you a friendship bracelet."
     );
 
-    friends[1] = Friend("Emma", "Did you go to class today?", "Classroom", 40, "Academic Support", "Letter of Acceptance");
+    friends[1] = Friend("Emma", "I'm really awesome and encourage your academic pursuits.", "Classroom", 40, "Academic Support", "Letter of Acceptance");
     friends[1].setFriendDialogues(
         "Did you go to class today?",
         "Isn't it great to have a stable routine?",
         "Here's a letter for you!"
     );
 
-    friends[2] = Friend("Brayden", "Come dance and stop spiraling.", "Party", 40, "Social Support", "Thank You Note");
+    friends[2] = Friend("Brayden", "I will always be here for you, no matter what.", "Party", 40, "Social Support", "Thank You Note");
     friends[2].setFriendDialogues(
-        "Come dance! Who cares!",
+        "Come dance! Who cares! Stop spiraling!",
         "Did you remember how much you've always loved dancing?",
         "Here's a Thank You Note."
     );
 
-    friends[3] = Friend("Maren", "don't know yet?", "Cafe", 40, "Comfort", "Cafe Gift Card");
+    friends[3] = Friend("Maren", "I've been by your side since the beginning, and will stay here until the end.", "Cafe", 40, "Comfort", "Cafe Gift Card");
     friends[3].setFriendDialogues(
         "How's your drink?",
-        "not sure yet",
+        "Sit down and finish your coffee.",
         "The cafe gave you a gift card as an apology for messing up your drink..."
     );
 }
@@ -592,7 +592,7 @@ void Game::endDay() {
 
 void Game::displayEnding() {
     cout << endl;
-    cout << "Endings" << endl; //refine this later....
+    cout << "--- Final Outcome ---" << endl; //refine this later....
 
 // the following is to implement the highest romance stat and chooses which ending you get if you go the romance route
 int highestRomance = loveInterests[0].getRomanceLevel(); //assuming Otter has the highest romance
@@ -614,34 +614,77 @@ if (player.getSelfWorth() == 100 &&
 }
 else if (!bundle.isComplete())
 {
-    cout << "BOO! The Bundle of Joy was not completed." << endl;
-    cout << "Seriously? This is probably the easiest aspect of the game." << endl;
+    cout << "--- EMPTY BUNDLE ---" << endl;
+    cout << "Did you even try to play the game?" << endl;
+    cout << "Seriously?" << endl;
+    cout << "I wrote all that code and for what?" << endl;
+    cout << "You better restart. Do better." << endl;
 }
 
     else if (highestRomance >= 60)
     {
         if (highestRomanceIndex == 0) {
-            cout <<"otter's ending"<<  endl; //i believe in case of a tie otter beats all.
+            cout <<"--- CLOCKSTOPPER ---"<<  endl; //i believe in case of a tie otter beats all.
+            cout << endl;
+            cout <<"You ended up with Otter." << endl;
+            cout <<"Otter didn't get the memo that you're together." << endl;
+            cout << "After 10 business days, you finally get a text back." << endl;
+            cout << "Otter is notifying you that your biological clocks are not aligned." << endl;
+            cout << endl;
+            cout << "7 months later, you run into Otter in the engineering building." << endl;
+            cout << "You just hold your breath." << endl;
         }
         else if (highestRomanceIndex == 1 ) {
-            cout << "panda's ending" << endl;
+            cout << "--- CAN'T TAKE MY EYES OFF OF YOU and you... and you... and you... ---" << endl;
+            cout << endl;
+            cout << "You ended up with Panda." << endl;
+            cout << "Panda's a lot of fun to hang out with." << endl;
+            cout << "Panda adores you." << endl;
+            cout << "And the other thousands of scantily clad people on their following list." << endl;
+            cout << endl;
+            cout << "You have enough romantic overlap to fill an entire sorority chapter." << endl;
         }
         else if (highestRomanceIndex == 2 ) {
-            cout << " seal's ending" << endl;
+            cout << "--- HAPPY WIFE HAPPY LIFE ---" << endl;
+            cout << endl;
+            cout << "You married Seal!" << endl;
+            cout << "Congratulations!" << endl;
+            cout << "This is what you wanted, right? To get married?" << endl;
+             cout << endl;
+            cout << "Every accomplishment you achieve will be subject to criticism. The spontaneity Seal loved about you? Not allowed anymore." << endl;
         }
         else if (highestRomanceIndex == 3) {
-            cout << "peguin's ending" << endl;
+            cout << "--- INTEREST ---" << endl;
+            cout << endl;
+            cout << "You end up with Penguin." << endl;
+            cout << "Love compounds annually." << endl;
+            cout << "Penguin says they want to move you to Slovakia, where their family has 5 estates." << endl;
+            cout << endl;
+            cout << "Penguin accused you of being a gold digger after you saw him leave a ten percent tip on a bill at a sushi restaurant." << endl;
         }
         else if (highestRomanceIndex == 4) { //tidy up if you have a chance before the interviw, you're getting sloppy
-            cout << "retriever's ending" << endl;
+            cout << "--- HE'S AT A FARM SOMEWHERE ----" << endl;
+            cout << endl;
+            cout << "You ended up with... I don't even know man." << endl;
+            cout << "Retriever ran off into the sunset, probably chasing a golf club in a game of fetch, while simultaneously running away from commitment." << endl;
+            cout << "The running? It's the most effort you've seen Retriever put into anything. Ever." << endl;
+            cout << endl; 
+            cout << "It's okay. You're more of a cat person anyway." << endl;
         }
     }
     else {
-        cout << "unHinge ending, bundle of joy completed" << endl;
+        cout << "--- BUNDLE OF NOTHING ---" << endl;
+        cout << endl;
+        cout << "You finished the bundle." << endl;
+        cout << "Congrats." << endl;
+        cout << "You don't feel anything." << endl;
+        cout << endl;
+     cout << "Your phone lights up with a message:" << endl;
+    cout << "\"hey\"" << endl;
     }
     displayCredits();
 
-//ADD MORE ENDINGS BEFORE INTERVIEW THIS SUCKS!!!! be evil
+//added endings
     cout << "============================" << endl;
 }
     void Game::displayGameTips() { //stuff for file input requirements that i dont quite yet get
