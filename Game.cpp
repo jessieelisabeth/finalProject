@@ -534,6 +534,7 @@ else if (!bundle.isComplete())
     else {
         cout << "unHinge ending, bundle of joy completed" << endl;
     }
+    displayCredits();
 
 //ADD MORE ENDINGS BEFORE INTERVIEW THIS SUCKS!!!! be evil
     cout << "============================" << endl;
@@ -645,4 +646,28 @@ cout << endl;
         cout << endl;
         cout << "\"Game? What game?\"" << endl;
         // BAM END CREDITS IM THE GOAT
+        // no literally roll credits now
+
+    }
+    //here
+    void Game::displayCredits()
+    {
+        cout << endl;
+        cout << "✧･ﾟ: *✧･ﾟ:*         *:･ﾟ✧*:･ﾟ✧" << endl;
+        cout << "✧･ﾟ: *✧･ﾟ:* THE END *:･ﾟ✧*:･ﾟ✧" << endl;
+        cout << "✧･ﾟ: *✧･ﾟ:*         *:･ﾟ✧*:･ﾟ✧" << endl;
+        cout<< endl;
+        cout << "Story, design, and code by Jessie." << endl;
+        cout << endl;
+        cout << "Thank you to Reagan, Maren, Brayden, and Emma for keeping me sane IRL." << endl;
+        cout << endl;
+        cout << "Thank you to the boys who inspired my prospects." << endl;
+        cout << "No, you will not be paid royalties. " << endl;
+        cout << endl;
+        cout << "No men were improved in the making of this game." << endl;
+        cout << "No emotional damage was incurred during development." << endl;
+        cout << endl;
+        cout << "You can git commit, but you can't git them to commit!" << endl;
+        cout << endl;
+
     }
